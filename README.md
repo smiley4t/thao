@@ -180,10 +180,10 @@ boot.mean.100<-function(w){
  boot100<-c(boot100,boot.compute(X,w[[i]]))}
  return(mean(boot100))}
 boot_mean_MC<-replicate(n=1000,boot.mean.100(w))
-count(boot_mean_MC<=z)##995 => p = 0.995
+count(boot_mean_MC<=z)##995 => p= 0.995
 
 ##mean G*n, n=40, Bin(10,0.1)
-n<-40
+n<-40 
 vec.prob<-c(rep(1/n,n))
 boot.compute<-function(X,w){for ( i in 1:n){
   a[i]<- abs(w[i]-1)*(X[i]-1)
