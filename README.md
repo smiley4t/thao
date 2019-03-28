@@ -6,7 +6,7 @@ set.seed(123)
 library("plyr")
 N<-1000
 z<-1.644854
-Tn(x-u), n=20, Bin(10, 0.1)
+##Tn(x-u), n=20, Bin(10, 0.1)
 n<-20
 (Create a distribution of t-statistic of binomial distribution) 
 tstat_MC<-replicate(n=1000,expr={x=rbinom(20,10,0.1);c((mean(x)-1)/(sqrt(var(x))/sqrt(n)))})
