@@ -5,6 +5,7 @@ Normal Distribution. Then the results would compare t-statistic, Bootstrap stati
 set.seed(123)
 library("plyr")
 N<-1000
+
 z<-1.644854
 ##Tn(x-u), n=20, Bin(10, 0.1)
 n<-20
