@@ -1,24 +1,34 @@
+Monte Carlo Simulation
+Introduction: This project runs Monte Carlo Simulation of Binomial Distribution, Poisson Distribution , Exponential Distribution, Multinomial Distribution
+Normal Distribution. Then the results would compare t-statistic, Bootstrap statistic and randomized versions of t-statistic and Bootstrap statistic with 95% percentile z-statistic of a standard norma
+distribution to see whether it fits the theology.
+
 set.seed(123)
 library("plyr")
 N<-1000
 z<-1.644854
 ##Tn(x-u), n=20, Bin(10, 0.1)
 n<-20
+(Create a distribution of t-statistic of binomial distribution) 
 tstat_MC<-replicate(n=1000,expr={x=rbinom(20,10,0.1);c((mean(x)-1)/(sqrt(var(x))/sqrt(n)))})
+(Calculating the number of t-statistic/1000 less than z=1.644854 to figure out the percentage compared to the theorical 95% one) 
 count(tstat_MC<=z)##965 => p=0.965
 
 ##Tn(x-u), n = 40, Bin (10, 0.1)
 n<-40
+(Create a distribution of t-statistic of binomial distribution)
 tstat_MC<-replicate(n=1000,expr={x=rbinom(40,10,0.1);c((mean(x)-1))/(sqrt(var(x))/sqrt(n))})
 count(Tn_MC<=z)##956 => p=0.956
 
 ##Tn(x-u), n = 20, Poi(1)
 n<-20
+(Create a distribution of t-statistic of poisson distribution)
 tstat_MC<-replicate(n=1000,expr={x=rpois(20,1);c((mean(x)-1))/(sqrt(var(x))/sqrt(n))})
 count(Tn_MC<=z) ##960 (constant) => p = 0.96
 
 ##Tn(X-u), n = 40. Poi (1)
 n<-40
+(Create a distribution of t-statistic of poisson distribution)
 tstat_MC<-replicate(n=1000,expr={x=rpois(40,1);c((mean(x)-1))/(sqrt(var(x))/sqrt(n))})
 hist(tstat_MC)
 count(Tn_MC<=z) ##960 (constant) => p = 0.96
@@ -52,6 +62,7 @@ n<-20
 a=rep(0,n)
 b=rep(0,n)
 vec.prob<-c(rep(1/n,n))
+(Create a  distribution of Bootstrap statistics) 
 tstat_random_MC<-replicate(n=1000,expr={w=rmultinom(1,n,vec.prob);X=rbinom(20,10,0.1);for ( i in 1:n){
   a[i]<- abs(w[i]-1)*(X[i]-1)
   b[i]<-(w[i]-1)^2};
@@ -167,18 +178,21 @@ count(tstat_random_MC<=z)#950 => p =0.95
 ##mean G*n , n=20, Bin (10,0.1)
 n<-20
 vec.prob<-c(rep(1/n,n))
+(Create funtion for computing bootstrap statistic)
 boot.compute<-function(X,w){for ( i in 1:n){
   a[i]<- abs(w[i]-1)*(X[i]-1)
   b[i]<-(w[i]-1)^2};
   c(sum(a)/(sqrt(var(X))*sqrt(sum(b))))}
 w<-list()
 boot100<-c()
+(Create function for computing the mean 0f 100 bootstrap statistic for a sample of Binomial distribution)
 boot.mean.100<-function(w){
   X<-rbinom(20,10,0.1)
   for (i in 1:100)
 {w[[i]]<-rmultinom(1,n,vec.prob);
  boot100<-c(boot100,boot.compute(X,w[[i]]))}
  return(mean(boot100))}
+ (Create a distribution of the mean of 100 bootstrap statistics)
 boot_mean_MC<-replicate(n=1000,boot.mean.100(w))
 count(boot_mean_MC<=z)##995 => p= 0.995
 
@@ -365,18 +379,21 @@ count(boot_median_MC<=z) #986=> p =0.986
 ##medianG*n, n=40, Bin(10,0.1)
 n<-40
 vec.prob<-c(rep(1/n,n))
+(Create function of calculating bootstrap statistic for a sample from Binomial distribution)
 boot.compute<-function(X,w){for ( i in 1:n){
   a[i]<- abs(w[i]-1)*(X[i]-1)
   b[i]<-(w[i]-1)^2};
   c(sum(a)/(sqrt(var(X))*sqrt(sum(b))))}
 w<-list()
 boot100<-c()
+(Create function of calculating the median for a sample of 100 bootstrap statistic)
 boot.median.100<-function(w){
   X<-rbinom(40,10,0.1)
   for (i in 1:100)
   {w[[i]]<-rmultinom(1,n,vec.prob);
   boot100<-c(boot100,boot.compute(X,w[[i]]))}
   return(median(boot100))}
+  (Create a distribution of the median of bootstrap statistic)
 boot_median_MC<-replicate(n=1000,boot.median.100(w))
 count(boot_median_MC<=z) #988=> p =0.988
 
