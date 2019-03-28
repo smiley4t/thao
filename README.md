@@ -2,15 +2,15 @@ Monte Carlo Simulation
 Introduction: This project runs Monte Carlo Simulation of Binomial Distribution, Poisson Distribution , Exponential Distribution, Multinomial Distribution
 Normal Distribution. Then the results would compare t-statistic, Bootstrap statistic and randomized versions of t-statistic and Bootstrap statistic with 95% percentile z-statistic of a standard normal distribution to see whether it fits the theology.
 
-##set.seed(123)
-##library("plyr")
-##N<-1000
-##z<-1.644854
-##Tn(x-u), n=20, Bin(10, 0.1)
-##n<-20
-##(Create a distribution of t-statistic of binomial distribution) 
-##tstat_MC<-replicate(n=1000,expr={x=rbinom(20,10,0.1);c((mean(x)-1)/(sqrt(var(x))/sqrt(n)))})
-##Calculating the number of t-statistic/1000 less than z=1.644854 to figure out the percentage compared to the theorical 95% one) 
+set.seed(123)
+library("plyr")
+N<-1000
+z<-1.644854
+Tn(x-u), n=20, Bin(10, 0.1)
+n<-20
+(Create a distribution of t-statistic of binomial distribution) 
+tstat_MC<-replicate(n=1000,expr={x=rbinom(20,10,0.1);c((mean(x)-1)/(sqrt(var(x))/sqrt(n)))})
+(Calculating the number of t-statistic/1000 less than z=1.644854 to figure out the percentage compared to the theorical 95% one) 
 count(tstat_MC<=z)##965 => p=0.965
 
 ##Tn(x-u), n = 40, Bin (10, 0.1)
